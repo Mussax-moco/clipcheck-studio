@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — ClipCheck Studio</title>
+  <meta name="description" content="How ClipCheck Studio handles files and subtitle text: everything is processed locally, with no uploads, application analytics or file storage.">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://mussax-moco.github.io/clipcheck-studio/privacy.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ClipCheck Studio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:url" content="https://mussax-moco.github.io/clipcheck-studio/privacy.html">
+  <meta property="og:title" content="Privacy Policy — ClipCheck Studio">
+  <meta property="og:description" content="How ClipCheck Studio handles files and subtitle text: everything is processed locally, with no uploads, application analytics or file storage.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Privacy Policy — ClipCheck Studio">
+  <meta name="twitter:description" content="How ClipCheck Studio handles files and subtitle text: everything is processed locally, with no uploads, application analytics or file storage.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="ClipCheck Studio home">
+        <span class="brand-mark" aria-hidden="true">CC</span>
+        <span class="brand-name">ClipCheck <strong>Studio</strong></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html#checker">Checker</a>
+        <a href="index.html#subtitles">Subtitles</a>
+        <a href="index.html#guides">Guides</a>
+        <a href="about.html">About</a>
+        <a href="privacy.html" aria-current="page">Privacy</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero" aria-labelledby="privacy-title">
+      <div class="wrap">
+        <p class="eyebrow">Your data</p>
+        <h1 id="privacy-title">Privacy Policy</h1>
+        <p class="lead">Last updated 22 November 2026. The short version: the website code never uploads your files, and it does not set cookies or run analytics.</p>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="short-title">
+      <div class="wrap prose">
+        <h2 id="short-title">The short version</h2>
+        <ul>
+          <li>Your video, image and SRT text stay inside your browser tab.</li>
+          <li>There is no account, database, upload endpoint or contact form on the site.</li>
+          <li>The site does not use advertising scripts, analytics tags or tracking cookies.</li>
+          <li>Closing the tab clears the in-memory file references. You can also use the Clear buttons.</li>
+        </ul>
+
+        <h2>What happens when you check a file</h2>
+        <p>When you choose a video or image, the browser creates a local object URL for that file. The preview element reads it so the page can measure width, height, duration and size. No request is sent to a ClipCheck server because no such server exists. The URL is released when you clear the file, choose another file or leave the page.</p>
+        <p>The transparent PNG generator draws into a canvas in your browser and downloads the result directly. It does not send the image anywhere. Likewise, the safe-area guide is calculated from a small set of percentages stored in the site's JavaScript.</p>
+
+        <h2>What happens to subtitle text</h2>
+        <p>Pasted SRT text and subtitle files are read as plain text and parsed by JavaScript on the page. The validator produces a report in your browser. Nothing is stored in local storage, session storage or a cookie, and there is no history of previous checks.</p>
+
+        <h2>Cookies, analytics and trackers</h2>
+        <p>ClipCheck Studio does not set cookies and does not include third-party tracking or advertising code. The page loads only its own stylesheet and script. That is why the tools still work after the initial page load, even if your connection drops.</p>
+
+        <h2>Hosting and ordinary network logs</h2>
+        <p>The site is hosted free on GitHub Pages. Requesting any web page involves network metadata such as an IP address and a timestamp, and the hosting provider may keep standard operational logs under its own policies. ClipCheck Studio itself does not read, store or process those logs. If you need details about the host's practices, consult GitHub's privacy documentation.</p>
+
+        <h2>Links to other sites</h2>
+        <p>The contact page links to the project's public issue tracker on GitHub. If you follow that link, GitHub's own terms and privacy policy apply. The site also names TikTok, Instagram and YouTube as format references; those names are not links to third-party trackers and do not imply a relationship.</p>
+
+        <h2>Children's privacy</h2>
+        <p>This is a general utility tool and is not directed at children under 13. It does not knowingly collect personal information from anyone.</p>
+
+        <h2>Changes and questions</h2>
+        <p>If this policy changes, the update date at the top will change with it. Because the application holds no personal data, there is no account to delete and no stored file to remove. Questions can be raised through the <a href="contact.html">contact page</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><strong>ClipCheck Studio</strong> — an independent, free tool for creators.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="about.html">About</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="contact.html">Contact</a>
+        <a href="sitemap.xml">Sitemap</a>
+      </nav>
+      <p>Not affiliated with, endorsed by, or connected to TikTok, Instagram, YouTube or their parent companies. Platform names are used for reference only.</p>
+      <p>All checks are approximate guidance. Files are processed locally in your browser.</p>
+    </div>
+  </footer>
+</body>
+</html>

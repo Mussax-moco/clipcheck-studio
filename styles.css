@@ -347,6 +347,25 @@ tr.is-error td { color: var(--bad); }
 .footer-inner p { color: var(--muted); font-size: .8rem; margin: 6px 0; }
 .footer-inner p:first-child { color: var(--text); }
 
+.content-block { margin-top: 34px; padding-top: 28px; border-top: 1px solid var(--line); }
+.prose { max-width: 76ch; color: var(--muted); font-size: .95rem; }
+.prose h2 { color: var(--text); font-size: 1.6rem; margin-top: 34px; }
+.prose h3 { color: var(--text); }
+.prose p { margin: 0 0 14px; }
+.prose ul, .prose ol { padding-left: 22px; margin: 0 0 16px; }
+.prose li + li { margin-top: 7px; }
+.prose a { text-underline-offset: 3px; }
+.page-hero { padding: 54px 0 18px; }
+.page-hero .lead { margin-bottom: 18px; }
+.cta-line { margin-top: 24px; }
+.faq-list { display: grid; gap: 12px; }
+.faq-list details { border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, var(--surface), var(--bg-soft)); padding: 0 18px; }
+.faq-list summary { cursor: pointer; font-weight: 700; padding: 16px 0; }
+.faq-list p { margin: 0 0 16px; color: var(--muted); }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 10px 0 14px; }
+.footer-nav a { color: var(--muted); font-size: .8rem; text-decoration: none; }
+.footer-nav a:hover { color: var(--text); }
+
 .sr-only {
   position: absolute !important;
   width: 1px !important;
@@ -360,8 +379,7 @@ tr.is-error td { color: var(--bad); }
 }
 
 @media (min-width: 640px) {
-  .header-inner { flex-wrap: nowrap; padding-block: 0; }
-  .main-nav { font-size: .875rem; }
+  .main-nav { font-size: .8rem; }
   .segmented { grid-template-columns: repeat(3, 1fr); }
   .stat-grid { grid-template-columns: repeat(4, 1fr); }
   .export-controls { grid-template-columns: 1fr auto; }
@@ -369,6 +387,9 @@ tr.is-error td { color: var(--bad); }
 }
 
 @media (min-width: 860px) {
+  .header-inner { flex-wrap: nowrap; padding-block: 0; }
+  .main-nav { font-size: .875rem; }
+  .page-hero { padding-top: 76px; }
   .hero { padding: 82px 0 56px; }
   .hero-inner { grid-template-columns: 1.15fr .85fr; gap: 60px; }
   .tool-grid { grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr); }

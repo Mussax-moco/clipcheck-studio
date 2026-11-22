@@ -4,6 +4,8 @@ A free, private browser toolkit for TikTok, Instagram Reels and YouTube Shorts c
 
 Everything runs in the browser with plain HTML, CSS and vanilla JavaScript. There is no backend, database, paid API, external library, tracking or file upload.
 
+**Live site:** https://mussax-moco.github.io/clipcheck-studio/
+
 ## Features
 
 - Local video and image preview with playable controls for video.
@@ -14,13 +16,20 @@ Everything runs in the browser with plain HTML, CSS and vanilla JavaScript. Ther
 - SRT parsing from pasted text or a `.srt` file, with checks for cue order, timestamps, overlaps, empty cues, reading speed, short cues and long lines.
 - Per-cue timing table and plain-language issue messages with line numbers.
 - Mobile-first, accessible interface with keyboard focus states and live regions.
+- SEO-ready static pages with canonical URLs, Open Graph metadata, structured data, `sitemap.xml` and `robots.txt`.
 
 ## Project files
 
-- `index.html` — page structure, metadata and original explainer copy.
+- `index.html` — tools, guides, FAQ, metadata and original explainer copy.
+- `about.html` — project background and principles.
+- `privacy.html` — privacy policy for local processing and hosting.
+- `contact.html` — bug reports, feature requests and contact guidance.
 - `styles.css` — responsive theme, layout and overlay styling.
 - `app.js` — all client-side logic, including pure functions exposed as `window.ClipCheck`.
+- `sitemap.xml` — canonical public URLs for search indexing.
+- `robots.txt` — crawl permissions and sitemap reference.
 - `tests/test.js` — Node test script for core parsing, checking and export logic.
+- `tests/seo-test.js` — Node test script for metadata, links and sitemap consistency.
 
 ## Local testing
 
@@ -47,13 +56,21 @@ Suggested manual checks:
 3. Download a PNG and place it over footage in an editor; the centre should be transparent.
 4. Paste SRT text, click **Insert sample**, then **Validate subtitles** to see timing and reading-speed findings.
 5. Try an unsupported file and confirm a readable error appears instead of a broken preview.
+6. Follow every header and footer link, including About, Privacy, Contact and the sitemap.
 
-Run the automated logic checks with:
+Run the automated checks with:
 
 ```bash
 node --check app.js
 node tests/test.js
+node tests/seo-test.js
 ```
+
+## Search indexing
+
+All canonical URLs use the deployed GitHub Pages address exactly. `robots.txt` allows crawling and points to the absolute sitemap URL. Each page has a unique title, meta description, canonical link and Open Graph metadata. The homepage includes a visible FAQ backed by matching `FAQPage` structured data.
+
+When deploying to a different domain, update every canonical, `og:url`, `twitter:title`, sitemap `loc` and the sitemap line in `robots.txt` before requesting indexing.
 
 ## Free deployment
 
@@ -87,7 +104,7 @@ This is a static site, so any static host works.
 
 ## Privacy and accuracy notes
 
-- Files are read with `URL.createObjectURL` and subtitles are parsed as text in memory. Nothing is fetched or sent anywhere.
+- Files are read with `URL.createObjectURL` and subtitles are parsed as text in memory. Nothing is fetched or sent anywhere by the application.
 - Safe-area percentages are approximate planning guides based on common vertical UI layouts. They are not official measurements, and real placement varies by app version, device and account settings.
 - Duration and file-size checks are general guidance. Platform limits change; check the platform's own help centre before publishing.
 - ClipCheck Studio is an independent tool and is not affiliated with, endorsed by or connected to TikTok, Instagram, YouTube or their parent companies.
