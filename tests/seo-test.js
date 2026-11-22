@@ -82,6 +82,10 @@ function words(source) {
   return cleaned.split(' ').filter(Boolean).length;
 }
 
+function footer(source) {
+  return matchOne(source, /<footer class="site-footer">([\s\S]*?)<\/footer>/, 'site footer');
+}
+
 test('every page has a unique title, one h1 and a unique description', function () {
   var titles = [];
   var descriptions = [];
@@ -130,8 +134,12 @@ test('robots.txt allows crawling and references the absolute sitemap', function 
 test('all internal links and anchors resolve', function () {
   Object.keys(pages).forEach(function (file) {
     hrefs(html[file]).forEach(function (href) {
+      if (/^(mailto:|tel:)/i.test(href)) {
+        return;
+      }
       if (/^https?:\/\//.test(href)) {
-        assert.ok(href.indexOf('https://github.com/Mussax-moco/clipcheck-studio') === 0 || href.indexOf(base) === 0, file + ' has unexpected external link: ' + href);
+        var allowed = href.indexOf('https://github.com/Mussax-moco/clipcheck-studio') === 0 || href.indexOf(base) === 0 || href.indexOf('https://wa.me/923169006243') === 0;
+        assert.ok(allowed, file + ' has unexpected external link: ' + href);
         return;
       }
       if (href.charAt(0) === '#') {
@@ -190,6 +198,58 @@ test('responsive header and content styles are present', function () {
   assert.ok(/@media \(min-width: 860px\)/.test(css));
   assert.ok(/\.header-inner\s*\{\s*flex-wrap:\s*nowrap/.test(css));
   assert.ok(/prefers-reduced-motion/.test(css));
+});
+
+test('every page has a professional footer with required links, credit and copyright', function () {
+  var requiredLinks = [
+    ['index.html', 'Home'],
+    ['about.html', 'About Us'],
+    ['contact.html', 'Contact Us'],
+    ['privacy.html', 'Privacy Policy']
+  ];
+  Object.keys(pages).forEach(function (file) {
+    var mark = footer(html[file]);
+    requiredLinks.forEach(function (entry) {
+      assert.ok(mark.indexOf('<a href="' + entry[0] + '">' + entry[1] + '</a>') >= 0, file + ' footer is missing ' + entry[1]);
+    });
+    assert.ok(mark.indexOf('Created with care by Ghulam Mustafa') >= 0, file + ' footer credit');
+    assert.ok(mark.indexOf('href="mailto:mustafaalee305@gmail.com"') >= 0, file + ' footer email link');
+    assert.ok(mark.indexOf('href="tel:+923169006243"') >= 0, file + ' footer phone link');
+    assert.ok(mark.indexOf('href="https://wa.me/923169006243"') >= 0, file + ' footer WhatsApp link');
+    assert.ok(mark.indexOf('© 2026 ClipCheck Studio. All Rights Reserved.') >= 0, file + ' footer copyright');
+    assert.ok(mark.indexOf('href="sitemap.xml"') >= 0, file + ' footer sitemap link');
+  });
+});
+
+test('contact page publishes confirmed owner contact details and social placeholder', function () {
+  var source = html['contact.html'];
+  assert.ok(source.indexOf('Ghulam Mustafa') >= 0, 'contact owner name');
+  assert.ok(source.indexOf('<h1 id="contact-title">Contact Us</h1>') >= 0, 'contact h1');
+  assert.ok(source.indexOf('href="mailto:mustafaalee305@gmail.com"') >= 0, 'contact email link');
+  assert.ok(source.indexOf('mustafaalee305@gmail.com') >= 0, 'contact email text');
+  assert.ok(source.indexOf('href="tel:+923169006243"') >= 0, 'contact phone link');
+  assert.ok(source.indexOf('+92 316 9006243') >= 0, 'contact phone text');
+  assert.ok(source.indexOf('href="https://wa.me/923169006243"') >= 0, 'contact WhatsApp link');
+  assert.ok(source.indexOf('To be added: official social profiles') >= 0, 'social placeholder');
+  assert.ok(!/To be added: public email address/.test(source), 'stale email placeholder');
+  assert.ok(!/To be added: public phone number/.test(source), 'stale phone placeholder');
+  assert.ok(!/Placeholder — to be added/.test(source), 'stale generic placeholder');
+  assert.ok(!/direct contact details are pending/i.test(source), 'stale pending description');
+});
+
+test('about page credits the owner', function () {
+  assert.ok(html['about.html'].indexOf('Ghulam Mustafa') >= 0, 'about owner name');
+});
+
+test('contact and footer styles are present with responsive breakpoints', function () {
+  assert.ok(/\.contact-layout\s*\{[^}]*display:\s*grid/.test(css));
+  assert.ok(/\.contact-card\s*\{/.test(css));
+  assert.ok(/\.contact-card-direct\s*\{/.test(css));
+  assert.ok(/\.footer-credit\s*\{/.test(css));
+  assert.ok(/\.footer-contact\s*\{/.test(css));
+  assert.ok(/\.footer-legal\s*\{/.test(css));
+  assert.ok(/@media \(min-width: 640px\)[\s\S]*?\.contact-layout\s*\{\s*grid-template-columns:\s*repeat\(2,/.test(css));
+  assert.ok(/@media \(min-width: 860px\)[\s\S]*?\.contact-layout\s*\{\s*grid-template-columns:\s*repeat\(3,/.test(css));
 });
 
 console.log('\n' + passed + ' SEO/link tests passed.');
