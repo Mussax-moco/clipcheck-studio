@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClipCheck Studio — Free TikTok, Reels &amp; Shorts Toolkit</title>
+  <meta name="description" content="Check video and image dimensions, aspect ratio, duration and file size, preview approximate platform safe areas, export a transparent safe-area PNG, and validate SRT subtitles. All processing stays on your device.">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ClipCheck Studio — Free TikTok, Reels &amp; Shorts Toolkit">
+  <meta property="og:description" content="Preview vertical clips, check specs, export transparent safe-area overlays and validate SRT subtitles locally in your browser.">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ClipCheck Studio",
+      "description": "A free browser toolkit for vertical video creators: media spec checks, approximate safe-area overlays and SRT subtitle validation.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any modern web browser",
+      "browserRequirements": "JavaScript enabled",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "Video and image preview",
+        "Dimensions, aspect ratio, duration and file size checks",
+        "Approximate platform safe-area overlays",
+        "Transparent safe-area PNG export",
+        "SRT subtitle validation with timing, reading-speed and long-line warnings",
+        "Private local processing without uploads"
+      ]
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="ClipCheck Studio home">
+        <span class="brand-mark" aria-hidden="true">CC</span>
+        <span class="brand-name">ClipCheck <strong>Studio</strong></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="#checker">Media checker</a>
+        <a href="#subtitles">Subtitle validator</a>
+        <a href="#guides">Guides</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Free toolkit for short-form creators</p>
+          <h1 id="hero-title">Make every vertical clip <span>frame-ready.</span></h1>
+          <p class="lead">ClipCheck Studio inspects your video or image, shows where platform interfaces may cover it, checks subtitle timing and reading speed, and exports a transparent guide you can overlay in your editor. Everything runs in your browser.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#checker">Check a file</a>
+            <a class="btn btn-secondary" href="#subtitles">Validate subtitles</a>
+          </div>
+          <ul class="trust-list" aria-label="Toolkit benefits">
+            <li>No account</li>
+            <li>No upload</li>
+            <li>No tracking</li>
+            <li>Works offline after load</li>
+          </ul>
+        </div>
+        <div class="hero-panel" aria-hidden="true">
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <span class="phone-line phone-line-top"></span>
+              <span class="phone-line phone-line-bottom"></span>
+              <span class="phone-line phone-line-side"></span>
+              <span class="phone-caption">1080 × 1920 · 9:16</span>
+            </div>
+          </div>
+          <p class="hero-panel-note">Approximate safe areas, drawn to scale</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap privacy-note" role="note">
+      <span class="privacy-icon" aria-hidden="true">●</span>
+      <p><strong>Private by design:</strong> your files and subtitle text never leave this page. There is no server, no upload and no analytics. Closing the tab removes everything from memory.</p>
+    </div>
+
+    <section class="section" id="checker" aria-labelledby="checker-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="eyebrow">Tool 01</p>
+          <h2 id="checker-title">Video &amp; image checker</h2>
+          <p>Before you post, confirm the basics: a tall frame, enough pixels, a workable duration and a sensible file size. Pick a target platform to adjust the safe-area guide and the checks below.</p>
+        </header>
+
+        <div class="tool-grid">
+          <div class="tool-main">
+            <div class="card">
+              <div class="card-head">
+                <h3 id="upload-title">1. Choose a file</h3>
+                <p id="upload-help">Drop a video or image here, or browse your device. Nothing is uploaded.</p>
+              </div>
+
+              <fieldset class="platform-picker">
+                <legend>Target platform</legend>
+                <div class="segmented">
+                  <label><input type="radio" name="platform" value="tiktok" checked><span>TikTok</span></label>
+                  <label><input type="radio" name="platform" value="reels"><span>Instagram Reels</span></label>
+                  <label><input type="radio" name="platform" value="shorts"><span>YouTube Shorts</span></label>
+                </div>
+              </fieldset>
+
+              <label class="drop-zone" id="dropZone" for="mediaFile">
+                <input type="file" id="mediaFile" name="mediaFile" accept="video/*,image/*" aria-describedby="upload-help fileError">
+                <span class="drop-icon" aria-hidden="true">＋</span>
+                <span class="drop-title">Click to browse or drag a file here</span>
+                <span class="drop-hint">MP4, WebM, MOV, PNG, JPG, GIF and other browser-supported formats</span>
+              </label>
+              <p class="error-text" id="fileError" role="alert" hidden></p>
+
+              <div class="file-meta" id="fileMeta" hidden>
+                <div><span class="meta-label">File</span><span class="meta-value" id="metaName">—</span></div>
+                <div><span class="meta-label">Type</span><span class="meta-value" id="metaType">—</span></div>
+                <div><span class="meta-label">Size</span><span class="meta-value" id="metaSize">—</span></div>
+              </div>
+              <div class="toolbar-row">
+                <label class="check-control"><input type="checkbox" id="overlayToggle" checked> Show safe-area overlay</label>
+                <button class="btn btn-ghost btn-sm" type="button" id="clearMedia" disabled>Clear file</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h3 id="preview-title">2. Preview with safe areas</h3>
+                <p>Shaded bands mark regions where platform controls, captions or buttons may sit. Treat them as planning guides, not exact measurements.</p>
+              </div>
+              <div class="preview-shell">
+                <div class="preview-stage" id="previewStage">
+                  <div class="media-mount" id="mediaMount"></div>
+                  <div class="placeholder" id="previewPlaceholder">Your preview will appear here</div>
+                  <div class="overlay" id="overlay" aria-hidden="true" hidden>
+                    <div class="zone zone-top"><span>Top UI</span></div>
+                    <div class="zone zone-bottom"><span>Bottom UI</span></div>
+                    <div class="zone zone-right"><span>Buttons</span></div>
+                    <div class="zone zone-left"><span>Edge</span></div>
+                  </div>
+                </div>
+              </div>
+              <p class="legend"><span class="legend-swatch" aria-hidden="true"></span> Shaded = keep important text and faces out of this region.</p>
+            </div>
+          </div>
+
+          <aside class="tool-side" aria-labelledby="results-title">
+            <div class="card sticky-card">
+              <div class="card-head">
+                <h3 id="results-title">File report</h3>
+                <p id="resultsStatus" aria-live="polite">Waiting for a file.</p>
+              </div>
+
+              <dl class="spec-list">
+                <div><dt>Width</dt><dd id="specWidth">—</dd></div>
+                <div><dt>Height</dt><dd id="specHeight">—</dd></div>
+                <div><dt>Aspect ratio</dt><dd id="specRatio">—</dd></div>
+                <div><dt>Duration</dt><dd id="specDuration">—</dd></div>
+                <div><dt>File size</dt><dd id="specSize">—</dd></div>
+                <div><dt>Media kind</dt><dd id="specKind">—</dd></div>
+              </dl>
+
+              <h4 class="subhead">Platform guidance</h4>
+              <ul class="check-list" id="checkList" aria-live="polite">
+                <li class="check-item check-neutral">Choose a file to see checks.</li>
+              </ul>
+              <p class="fine-print">Guidance is approximate and may change. Always confirm current limits in the platform's own help centre. ClipCheck Studio is not affiliated with TikTok, Instagram or YouTube.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="safe-area" aria-labelledby="safe-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="eyebrow">Tool 02</p>
+          <h2 id="safe-title">Transparent safe-area PNG</h2>
+          <p>Download a ready-made guide layer with a fully transparent centre. Import it above your footage in CapCut, Premiere, Resolve or any editor that supports PNG overlays, then scale it to your timeline.</p>
+        </header>
+
+        <div class="card export-card">
+          <div class="export-controls">
+            <div class="field">
+              <label for="exportSize">Overlay resolution</label>
+              <select id="exportSize">
+                <option value="1080x1920">1080 × 1920 (standard vertical)</option>
+                <option value="720x1280">720 × 1280 (lighter file)</option>
+                <option value="2160x3840">2160 × 3840 (high resolution)</option>
+              </select>
+            </div>
+            <label class="check-control"><input type="checkbox" id="labelToggle" checked> Draw zone labels</label>
+            <button class="btn btn-primary" type="button" id="downloadOverlay">Download transparent PNG</button>
+          </div>
+          <p class="fine-print">The PNG uses the platform selected above. It contains only semi-transparent shaded zones: the safe centre stays transparent, so your video shows through.</p>
+          <p class="error-text" id="exportError" role="alert" hidden></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="subtitles" aria-labelledby="subs-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="eyebrow">Tool 03</p>
+          <h2 id="subs-title">SRT subtitle validator</h2>
+          <p>Subtitles can be technically valid yet still uncomfortable to read. This checker parses your SRT file, then flags timing conflicts, fast reading speeds, crowded lines and formatting mistakes.</p>
+        </header>
+
+        <div class="subtitle-grid">
+          <div class="card">
+            <div class="card-head">
+              <h3 id="srt-input-title">Your subtitles</h3>
+              <p id="srt-help">Paste SRT text or load a .srt file. Parse results stay on this device.</p>
+            </div>
+            <label class="sr-only" for="srtInput">SRT subtitle text</label>
+            <textarea id="srtInput" rows="14" spellcheck="false" placeholder="1&#10;00:00:00,000 --> 00:00:03,000&#10;Welcome to the clip." aria-describedby="srt-help srtError"></textarea>
+            <p class="error-text" id="srtError" role="alert" hidden></p>
+            <div class="toolbar-row wrap-row">
+              <label class="btn btn-secondary btn-sm file-btn" for="srtFile">Load .srt file</label>
+              <input class="sr-only" type="file" id="srtFile" accept=".srt,text/plain" aria-label="Load an SRT file">
+              <button class="btn btn-ghost btn-sm" type="button" id="sampleSrt">Insert sample</button>
+              <button class="btn btn-ghost btn-sm" type="button" id="clearSrt">Clear</button>
+              <button class="btn btn-primary btn-sm" type="button" id="validateSrt">Validate subtitles</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h3>Validation report</h3>
+              <p id="srtStatus" aria-live="polite">No subtitles checked yet.</p>
+            </div>
+            <div class="stat-grid" id="srtStats" hidden>
+              <div><span class="stat-value" id="statCues">0</span><span class="stat-label">Cues</span></div>
+              <div><span class="stat-value" id="statErrors">0</span><span class="stat-label">Errors</span></div>
+              <div><span class="stat-value" id="statWarnings">0</span><span class="stat-label">Warnings</span></div>
+              <div><span class="stat-value" id="statCps">0</span><span class="stat-label">Peak chars/s</span></div>
+            </div>
+            <div class="results-scroll">
+              <ul class="issue-list" id="issueList" aria-live="polite">
+                <li class="issue-empty">Run the validator to see findings.</li>
+              </ul>
+            </div>
+            <details class="cue-details" id="cueDetails" hidden>
+              <summary>Per-cue timing detail</summary>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr><th scope="col">#</th><th scope="col">Start</th><th scope="col">End</th><th scope="col">Length</th><th scope="col">Chars/s</th><th scope="col">Text</th></tr>
+                  </thead>
+                  <tbody id="cueTableBody"></tbody>
+                </table>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="guides" aria-labelledby="guides-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="eyebrow">Quick guides</p>
+          <h2 id="guides-title">Small checks that save re-shoots</h2>
+          <p>Short-form platforms recompose, crop and cover your video in different ways. A few pre-export habits make your captions and subjects survive that process.</p>
+        </header>
+        <div class="guide-grid">
+          <article class="guide-card">
+            <h3>Frame for 9:16 first</h3>
+            <p>A 1080 × 1920 canvas is the common vertical reference. If you edit in a different ratio, export a true vertical copy rather than relying on the platform to crop a landscape video.</p>
+          </article>
+          <article class="guide-card">
+            <h3>Protect the middle band</h3>
+            <p>Profile names, captions, like counts and buttons usually sit near the top, bottom and right edge. Keep faces, product shots and burned-in text away from those bands so nothing important gets hidden.</p>
+          </article>
+          <article class="guide-card">
+            <h3>Read subtitles out loud</h3>
+            <p>Around 17 characters per second is a useful ceiling for quick captions. Two short lines are easier to scan than one long line, and a cue that appears for less than a second is easy to miss.</p>
+          </article>
+          <article class="guide-card">
+            <h3>Check the file, not just the idea</h3>
+            <p>Resolution, duration and size all affect how smoothly a clip uploads and plays. Catching an accidental 4K, three-minute export before you publish is much cheaper than re-uploading later.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><strong>ClipCheck Studio</strong> — an independent, free tool for creators.</p>
+      <p>Not affiliated with, endorsed by, or connected to TikTok, Instagram, YouTube or their parent companies. Platform names are used for reference only.</p>
+      <p>All checks are approximate guidance. Files are processed locally in your browser.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
