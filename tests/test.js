@@ -110,6 +110,114 @@ test('SRT parser detects numbering and structure errors', function () {
   assert.ok(titles(unnumbered).indexOf('Cue number missing') >= 0);
 });
 
+test('SRT cue numbers stay sequential for valid cues', function () {
+  var result = cc.parseSrt([
+    '1',
+    '00:00:00,000 --> 00:00:01,000',
+    'One.',
+    '',
+    '2',
+    '00:00:01,100 --> 00:00:02,000',
+    'Two.',
+    '',
+    '3',
+    '00:00:02,100 --> 00:00:03,000',
+    'Three.',
+    ''
+  ].join('\n'));
+  assert.deepEqual(result.cues.map(function (cue) { return cue.number; }), [1, 2, 3]);
+  assert.equal(result.issues.length, 0);
+});
+
+test('SRT missing cue numbers do not shift later cue numbers', function () {
+  var result = cc.parseSrt([
+    '00:00:00,000 --> 00:00:01,000',
+    'One.',
+    '',
+    '2',
+    '00:00:01,100 --> 00:00:02,000',
+    'Two.',
+    '',
+    '3',
+    '00:00:02,100 --> 00:00:03,000',
+    'Three.',
+    ''
+  ].join('\n'));
+  assert.ok(titles(result).indexOf('Cue number missing') >= 0);
+  assert.equal(titles(result).indexOf('Cue numbers out of order'), -1);
+  assert.deepEqual(result.cues.map(function (cue) { return cue.number; }), [null, 2, 3]);
+});
+
+test('SRT malformed timestamps are reported without renumbering later cues', function () {
+  var result = cc.parseSrt([
+    '1',
+    '00:00:00,000 --> 00:00:01,000',
+    'One.',
+    '',
+    '2',
+    '00:00:02 --> 00:00:03',
+    'Two.',
+    '',
+    '3',
+    '00:00:03,100 --> 00:00:04,000',
+    'Three.',
+    ''
+  ].join('\n'));
+  assert.ok(titles(result).indexOf('Timestamp could not be read') >= 0);
+  assert.equal(titles(result).indexOf('Cue numbers out of order'), -1);
+  assert.equal(result.stats.cues, 2);
+});
+
+test('SRT malformed cue followed by valid cues keeps later numbering', function () {
+  var result = cc.parseSrt([
+    '1',
+    '00:00:00,000 --> 00:00:01,000',
+    'One.',
+    '',
+    '2',
+    '00:00:99,000 --> 00:00:02,000',
+    'Broken.',
+    '',
+    '3',
+    '00:00:03,000 --> 00:00:04,000',
+    '',
+    '4',
+    '00:00:05,000 --> 00:00:06,000',
+    'Four.',
+    '',
+    '5',
+    '00:00:07,000 --> 00:00:08,000',
+    'Five.',
+    ''
+  ].join('\n'));
+  assert.ok(titles(result).indexOf('Timestamp could not be read') >= 0);
+  assert.ok(titles(result).indexOf('Empty subtitle cue') >= 0);
+  assert.equal(titles(result).indexOf('Cue numbers out of order'), -1);
+  assert.deepEqual(result.cues.map(function (cue) { return cue.number; }), [1, 4, 5]);
+
+  var stray = cc.parseSrt('Loose note.\n\n1\n00:00:00,000 --> 00:00:01,000\nOne.\n\n2\n00:00:02,000 --> 00:00:03,000\nTwo.');
+  assert.equal(titles(stray).indexOf('Cue numbers out of order'), -1);
+});
+
+test('SRT duplicate cue numbers are reported', function () {
+  var result = cc.parseSrt([
+    '1',
+    '00:00:00,000 --> 00:00:01,000',
+    'One.',
+    '',
+    '2',
+    '00:00:01,100 --> 00:00:02,000',
+    'Two.',
+    '',
+    '2',
+    '00:00:02,100 --> 00:00:03,000',
+    'Three.',
+    ''
+  ].join('\n'));
+  assert.equal(titles(result).filter(function (title) { return title === 'Cue numbers out of order'; }).length, 1);
+  assert.ok(result.issues.some(function (issue) { return /Expected cue 3, found 2/.test(issue.detail); }));
+});
+
 test('SRT parser warns on long lines, fast reading and short cues', function () {
   var fast = cc.parseSrt('1\n00:00:00,000 --> 00:00:00,500\nThis sentence is far too long for one second.');
   assert.ok(titles(fast).indexOf('Reading speed is too high') >= 0);

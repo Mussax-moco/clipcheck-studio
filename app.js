@@ -123,6 +123,11 @@
       var timestampIndex = block.lines.findIndex(function (line) {
         return TIMESTAMP_LINE.test(line.text);
       });
+      if (timestampIndex === -1) {
+        timestampIndex = block.lines.findIndex(function (line) {
+          return line.text.indexOf('-->') !== -1;
+        });
+      }
 
       if (timestampIndex === -1) {
         issues.push({
@@ -131,6 +136,7 @@
           title: 'Timestamp line missing',
           detail: 'Expected a line in the form 00:00:01,000 --> 00:00:04,000.'
         });
+        if (/^\d+$/.test(block.lines[0].text.trim())) expected += 1;
         return;
       }
 
@@ -160,6 +166,7 @@
           });
         }
       }
+      expected += 1;
 
       var timestampLine = block.lines[timestampIndex];
       var times = parseTimestampLine(timestampLine.text);
@@ -276,7 +283,6 @@
         wpm: duration > 0 ? (characters / 5) / (duration / 60) : 0
       });
       previous = cues[cues.length - 1];
-      expected += 1;
     });
 
     return finalizeSrt(cues, issues);
